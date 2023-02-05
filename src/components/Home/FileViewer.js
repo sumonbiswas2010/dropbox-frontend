@@ -1,28 +1,25 @@
 import React, { useEffect } from 'react';
-// import FileViewer from 'react-file-viewer';
-import DocViewer from 'react-doc-viewer';
-import { useLocation } from 'react-router-dom';
-const ViewFile = ({}) => {
+import DocViewer, { DocViewerRenderers } from 'react-doc-viewer';
+import { useLocation, useParams } from 'react-router-dom';
+const ViewFile = () => {
     const location = useLocation();
     const [file, setFile] = React.useState(null);
-    console.log(location.state);
-    // useEffect(() => {
-    //     console.log(location.state);
-    //     if (location.state) setFile(location.state);
-    // }, []);
-    const docs = [{ uri: 'https://url-to-my-pdf.pdf' }, { uri: 'https://url-to-my-pdf.pdf' }];
+    const { key } = useParams();
+
+    useEffect(() => {
+        if (location.state) {
+            const docs = [
+                {
+                    uri: process.env.REACT_APP_API_URL + '/upload/file/' + key,
+                    fileType: location.state.type
+                }
+            ];
+            setFile(docs);
+        }
+    }, []);
+
     return (
-        <DocViewer documents={docs} />
-        // <div>
-        //     {file && (
-        //         <FileViewer
-        //             fileType={file.type}
-        //             filePath={'http://localhost:8090/v1/upload/file/' + file.key}
-        //             // errorComponent={CustomErrorComponent}
-        //             onError={(e) => console.log(e)}
-        //         />
-        //     )}
-        // </div>
+        <>{file && <DocViewer key={key} pluginRenderers={DocViewerRenderers} documents={file} />}</>
     );
 };
 export default ViewFile;

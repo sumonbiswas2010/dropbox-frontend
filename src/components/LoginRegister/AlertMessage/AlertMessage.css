@@ -1,0 +1,33 @@
+.alert-message {
+  background: #ffffff;
+  border: 1px solid rgba(4, 4, 21, 0.04);
+  border-left: 5px solid #3fd785;
+  box-shadow: 6px 6px 12px rgba(4, 4, 21, 0.1);
+  border-radius: 5px;
+  padding: 12px 16px;
+  margin: 35px 0 0;
+}
+
+.alert-message p {
+  margin: 0;
+  text-align: left;
+  padding: 0;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.success-message {
+  border-left: 5px solid #3fd785;
+}
+
+.success-message p {
+  color: #49c080;
+}
+
+.error-message {
+  border-left: 5px solid #fe6667;
+}
+
+.error-message p {
+  color: #fe6667;
+}

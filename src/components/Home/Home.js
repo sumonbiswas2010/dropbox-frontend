@@ -12,14 +12,15 @@ const Home = () => {
     const [isUploading, setIsUplaoding] = useState(false);
     const [isDataFetching, setIsDataFetching] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    console.log(files);
+    useEffect(() => {
+        document.title = 'DropBox';
+    });
 
     const getFiles = async () => {
         setIsDataFetching(true);
         const data = await apiCall('/upload/files');
         setIsDataFetching(false);
         if (data.ok) setFiles(data.data);
-        else console.log(data.msg);
     };
     useEffect(() => {
         getFiles();

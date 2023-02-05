@@ -1,6 +1,22 @@
+import {
+    checkAccessToken,
+    checkRefreshToken,
+    getAccessToken,
+    refreshAuthToken
+} from 'components/LoginRegister/Login/Auths';
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
+const loginCheck = async () => {
+    const isAccess = await checkAccessToken();
+    const isRefresh = await checkRefreshToken();
+    if (isAccess && isRefresh) {
+        return true;
+    }
+    const isRefreshed = await refreshAuthToken();
+    if (isRefreshed) return true;
+    return false;
+};
 const MyDropzone = ({ newFileAdd, setIsUplaoding }) => {
     const [msg, setMsg] = useState();
 
@@ -10,12 +26,17 @@ const MyDropzone = ({ newFileAdd, setIsUplaoding }) => {
             const data = new FormData();
             data.append('file', file);
             setIsUplaoding(true);
+            await loginCheck();
+            const token = getAccessToken();
             const res = await fetch('http://localhost:8090/v1/upload/file', {
                 method: 'POST',
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
                 body: data
             });
             setIsUplaoding(false);
-            console.log(res);
+
             if (res.ok) {
                 const data = await res.json();
                 newFileAdd(data.data);
@@ -25,14 +46,12 @@ const MyDropzone = ({ newFileAdd, setIsUplaoding }) => {
                 setMsg(data.message);
             }
 
-            console.log(file);
             const reader = new FileReader();
             reader.onabort = () => console.log('file reading was aborted');
             reader.onerror = () => console.log('file reading has failed');
             reader.onload = () => {
                 // Do whatever you want with the file contents
                 const binaryStr = reader.result;
-                console.log(binaryStr);
             };
             reader.readAsArrayBuffer(file);
         });

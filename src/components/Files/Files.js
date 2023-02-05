@@ -43,6 +43,7 @@ function createData(name, type, key, createdAt, updatedAt, isStarred) {
     } else if (type.includes('image')) {
         typeImg = <GrImage />;
         type = type.split('/')[1];
+        if (type === 'gif') type = 'png';
     } else if (type.includes('text')) {
         typeImg = <GrDocumentTxt />;
         type = 'txt';
@@ -207,7 +208,7 @@ function EnhancedTableToolbar(props) {
                 </Typography>
             ) : (
                 <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
-                    Nutrition
+                    Uploaded Files
                 </Typography>
             )}
 
@@ -312,11 +313,7 @@ export default function EnhancedTable({ data, setPreviewFile, setIsLoading }) {
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-    const deleteRow = async (key) => {
-        console.log(key);
-    };
     const deleteFiles = async () => {
-        console.log('deleting');
         setIsLoading(true);
         const res = await apiCall('/upload/files', 'DELETE', selected);
         setIsLoading(false);
@@ -325,14 +322,9 @@ export default function EnhancedTable({ data, setPreviewFile, setIsLoading }) {
         }
     };
     const changeStar = async (key, data) => {
-        console.log('updating');
-        console.log(key, data);
         setIsLoading(true);
         const res = await apiCall('/upload/file/' + key, 'PATCH', { isStarred: data });
         setIsLoading(false);
-        // if (res.ok) {
-        //     setRows(rows.filter((row) => !selected.includes(row.key)));
-        // }
     };
     return (
         <Box sx={{ width: '100%' }}>
@@ -356,8 +348,6 @@ export default function EnhancedTable({ data, setPreviewFile, setIsLoading }) {
                             {stableSort(rows, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    console.log(row);
-
                                     const isItemSelected = isSelected(row.key);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -408,24 +398,11 @@ export default function EnhancedTable({ data, setPreviewFile, setIsLoading }) {
                                                                 }
                                                             />
                                                         </Stack>
-                                                        {/* <ReactStars
-                                                            count={1}
-                                                            // value={displayData.rating || 0}
-                                                            onChange={(e) => changeStar(row.key, e)}
-                                                            size={24}
-                                                            activeColor="#ffd700"
-                                                        /> */}
                                                     </IconButton>
                                                 </Tooltip>
                                             </TableCell>
                                             <TableCell align="right">{row.createdAt}</TableCell>
                                             <TableCell align="right">{row.updatedAt}</TableCell>
-                                            <TableCell
-                                                onClick={() => deleteRow(row.key)}
-                                                align="right"
-                                            >
-                                                {row.btn}
-                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}

@@ -1,3 +1,4 @@
+import { logout } from 'components/LoginRegister/Login/Auths';
 import React from 'react';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -6,7 +7,7 @@ const Nav = () => {
     const percentage = 40;
     return (
         <div className="nav">
-            <div>Members Area</div>
+            <div>Files Area</div>
             <div className="nav-btns">
                 <CircularProgressbar
                     className="progress-bar"
@@ -21,6 +22,10 @@ const Nav = () => {
                     src={UserImg}
                     alt="Group Of 10 Guys - Login User Icon Png@nicepng.com"
                 ></img>
+
+                <p className="log-out" onClick={logout}>
+                    Log Out
+                </p>
             </div>
         </div>
     );

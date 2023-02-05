@@ -1,0 +1,31 @@
+.submit-btn-area {
+  margin: 35px 0 0;
+}
+
+.login-register-button {
+  width: 100%;
+  cursor: pointer;
+  background: #19b846;
+  color: #fff;
+  border-radius: 12px;
+  font-family: "Nunito";
+  text-align: center;
+  letter-spacing: -0.3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 14px 0;
+  border: none;
+  box-shadow: 4px 4px 0px rgb(4 4 21 / 60%);
+}
+
+.login-register-button:active {
+  transform: translateY(4px);
+  box-shadow: 2px 2px 0px rgb(0, 0, 0);
+}
+
+.login-register-button:disabled {
+  background: #19b84661;
+  color: #fff;
+  box-shadow: none;
+}

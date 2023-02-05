@@ -8,6 +8,10 @@
   transform: translate(-50%, -50%); */
   position: relative;
 }
+.log-out:hover {
+  cursor: pointer;
+  color: white;
+}
 .drop-zone {
   background-color: #e2e6e9;
   height: 300px;
