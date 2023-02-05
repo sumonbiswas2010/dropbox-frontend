@@ -10,7 +10,7 @@ const ViewFile = () => {
         if (location.state) {
             const docs = [
                 {
-                    uri: process.env.REACT_APP_API_URL + '/upload/file/' + key,
+                    uri: location.state.location,
                     fileType: location.state.type
                 }
             ];

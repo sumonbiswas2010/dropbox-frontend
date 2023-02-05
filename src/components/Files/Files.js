@@ -35,7 +35,7 @@ import {
 import { Link } from 'react-router-dom';
 import apiCall from '../../api/apiCall';
 
-function createData(name, type, key, createdAt, updatedAt, isStarred) {
+function createData(name, type, key, createdAt, updatedAt, isStarred, location) {
     let typeImg = <GrDocumentConfig />;
     if (type.includes('pdf')) {
         typeImg = <GrDocumentPdf />;
@@ -59,7 +59,8 @@ function createData(name, type, key, createdAt, updatedAt, isStarred) {
         key,
         createdAt,
         updatedAt,
-        isStarred
+        isStarred,
+        location
     };
 }
 
@@ -246,7 +247,8 @@ export default function EnhancedTable({ data, setPreviewFile, setIsLoading }) {
                     data[i].key,
                     moment(data[i].createdAt).format('lll'),
                     moment(data[i].updatedAt).format('lll'),
-                    data[i].isStarred
+                    data[i].isStarred,
+                    data[i].location
                 )
             );
         }
@@ -378,7 +380,11 @@ export default function EnhancedTable({ data, setPreviewFile, setIsLoading }) {
                                             >
                                                 <Link
                                                     to={`/view/${row.key}`}
-                                                    state={{ key: row.key, type: row.type }}
+                                                    state={{
+                                                        location: row.location,
+                                                        key: row.key,
+                                                        type: row.type
+                                                    }}
                                                 >
                                                     <h4>{row.name}</h4>
                                                 </Link>
