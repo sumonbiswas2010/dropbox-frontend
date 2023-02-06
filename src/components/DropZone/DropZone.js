@@ -4,7 +4,7 @@ import {
     getAccessToken,
     refreshAuthToken
 } from 'components/LoginRegister/Login/Auths';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 const loginCheck = async () => {
@@ -28,7 +28,7 @@ const MyDropzone = ({ newFileAdd, setIsUplaoding }) => {
             setIsUplaoding(true);
             await loginCheck();
             const token = getAccessToken();
-            const res = await fetch(process.env.REACT_APP_API_URL+'/upload/file', {
+            const res = await fetch(process.env.REACT_APP_API_URL + '/upload/file', {
                 method: 'POST',
                 headers: {
                     Authorization: 'Bearer ' + token
