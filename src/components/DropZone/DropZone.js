@@ -28,7 +28,7 @@ const MyDropzone = ({ newFileAdd, setIsUplaoding }) => {
             setIsUplaoding(true);
             await loginCheck();
             const token = getAccessToken();
-            const res = await fetch('http://localhost:8090/v1/upload/file', {
+            const res = await fetch(process.env.REACT_APP_API_URL+'/upload/file', {
                 method: 'POST',
                 headers: {
                     Authorization: 'Bearer ' + token
